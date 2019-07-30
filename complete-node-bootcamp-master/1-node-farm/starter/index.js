@@ -1,6 +1,8 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+const replaceTemplate = require('./modules/replaceTemplate');
+const replaceProd = require('./modules/replaceProd');
 
 ////////////// Files
 
@@ -66,28 +68,6 @@ const productTemplate = fs.readFileSync(`${__dirname}/templates/product.html`, '
 const overviewTemplate = fs.readFileSync(`${__dirname}/templates/overview.html`, 'utf-8');
 const productCardTemplate = fs.readFileSync(`${__dirname}/templates/product-card.html`, 'utf-8');
 
-const replaceTemplate = (temp, el) => {
-    let output = temp.replace(/{%PRODUCTNAME%}/g, el.productName);
-    output = output.replace(/{%ID%}/g, el.id);
-    output = output.replace(/{%IMAGE%}/g, el.image);
-    output = output.replace(/{%QUANTITY%}/g, el.quantity);
-    output = output.replace(/{%PRICE%}/g, el.price);
-    if (el.organic !== true) output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
-    return output;
-};
-
-const replaceProd = (temp, id) => {
-    let output = temp.replace(/{%PRODUCTNAME%}/g, dataObj[id].productName);
-    output = output.replace(/{%IMAGE%}/g, dataObj[id].image);
-    output = output.replace(/{%ORIGIN%}/g, dataObj[id].from);
-    output = output.replace(/{%NUTRIENTS%}/g, dataObj[id].nutrients);
-    output = output.replace(/{%QUANTITY%}/g, dataObj[id].quantity);
-    output = output.replace(/{%PRICE%}/g, dataObj[id].price);
-    output = output.replace(/{%DESCRIPTION%}/g, dataObj[id].description);
-    if (dataObj[id].organic !== true) output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
-    return output;
-};
-
 const server = http.createServer((req,res) => {
     const { query, pathname } = url.parse(req.url, true);
 
@@ -101,8 +81,8 @@ const server = http.createServer((req,res) => {
 
     // PRODUCT page
     } else if (pathname === '/product' && query.id < dataObj.length) {
-        const id = query.id
-        const prodTemp = replaceProd(productTemplate, id);
+        const el = dataObj[query.id];
+        const prodTemp = replaceProd(productTemplate, el);
         res.writeHead(200, {'Content-type':'text/html'});        
         res.end(prodTemp);
 
