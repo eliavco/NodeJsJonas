@@ -1,5 +1,5 @@
 const fs = require('fs');
-const toursDataRelativePath = './dev-data/data/tours-simple.json';
+const toursDataRelativePath = './../dev-data/data/tours-simple.json';
 const tours = JSON.parse(
     fs.readFileSync(`${__dirname}/${toursDataRelativePath}`, 'utf-8')
 );

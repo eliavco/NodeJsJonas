@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const crud = require('./crud');
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes');
 const apiVersion = 1;
 app.use(express.json());
 
@@ -16,15 +17,9 @@ app.use((req, res, next) => {
 });
 app.use(morgan());
 
-// Routes
-app.route(`/api/v${apiVersion}/tours`)
-    .get(crud.getAllTours)
-    .post(crud.createNewTour);
-
-app.route(`/api/v${apiVersion}/tours/:id`)
-    .get(crud.getTour)
-    .patch(crud.updateTour)
-    .delete(crud.deleteTour);
+// Routes Middleware
+app.use(`/api/v${apiVersion}/tours`, tourRouter);
+app.use(`/api/v${apiVersion}/users`, userRouter);
 
 // Server
 const port = 3000;
