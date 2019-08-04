@@ -1,15 +1,15 @@
 const express = require('express');
-const users = require('./../api-v1/users');
+const userController = require('./../controllers/userController');
 const router = express.Router();
 
 router
     .route('/')
-    .get(users.getAllUsers)
-    .post(users.createNewUser);
+    .get(userController.getAllUsers)
+    .post(userController.createNewUser);
 router
     .route('/:id')
-    .get(users.getUser)
-    .patch(users.updateUser)
-    .delete(users.deleteUser);
+    .get(userController.getUser)
+    .patch(userController.updateUser)
+    .delete(userController.deleteUser);
 
 module.exports = router;

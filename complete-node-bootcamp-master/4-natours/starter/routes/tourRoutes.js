@@ -1,15 +1,22 @@
 const express = require('express');
-const tours = require('./../api-v1/tours');
+const tourController = require('./../controllers/tourController');
 const router = express.Router();
+
+router.param('id', (req, res, next, val) => {
+    console.log(`This is the id: ${val}`);
+    next();
+});
+
+router.param('id', tourController.checkId);
 
 router
     .route('/')
-    .get(tours.getAllTours)
-    .post(tours.createNewTour);
+    .get(tourController.getAllTours)
+    .post(tourController.checkBody, tourController.createNewTour);
 router
     .route('/:id')
-    .get(tours.getTour)
-    .patch(tours.updateTour)
-    .delete(tours.deleteTour);
+    .get(tourController.getTour)
+    .patch(tourController.updateTour)
+    .delete(tourController.deleteTour);
 
 module.exports = router;

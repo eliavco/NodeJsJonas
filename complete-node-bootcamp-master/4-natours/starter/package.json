@@ -4,11 +4,12 @@
   "description": "Learning Node.js, Express, and MongoDB",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "author": "Eliav Cohen",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "morgan": "^1.9.1"
   }
