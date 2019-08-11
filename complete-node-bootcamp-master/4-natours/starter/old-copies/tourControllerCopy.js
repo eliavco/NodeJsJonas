@@ -1,4 +1,10 @@
+const fs = require('fs');
 const Tour = require('./../models/tourModel');
+
+const toursDataRelativePath = './../dev-data/data/tours-simple.json';
+const tours = JSON.parse(
+    fs.readFileSync(`${__dirname}/${toursDataRelativePath}`, 'utf-8')
+);
 
 const checkId = (req, res, next, val) => {
     const id = req.params.id * 1;

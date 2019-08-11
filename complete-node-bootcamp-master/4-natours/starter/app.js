@@ -1,15 +1,17 @@
 const express = require('express');
+
 const app = express();
 const morgan = require('morgan');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
+
 const apiVersion = 1;
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 
 // custom middleware
 app.use((req, res, next) => {
-    console.log('Hello from the middleware 👋');
+    // console.log('Hello from the middleware 👋');
     next();
 });
 app.use((req, res, next) => {
@@ -17,7 +19,7 @@ app.use((req, res, next) => {
     next();
 });
 
-if(process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development') {
     app.use(morgan());
 }
 
