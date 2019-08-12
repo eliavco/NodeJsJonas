@@ -47,7 +47,8 @@ const createNewTour = async (req, res) => {
     } catch (err) {
         res.status(404).json({
             status: 'failure',
-            message: 'Invalid data sent!'
+            message: 'Invalid data sent!',
+            devCrash: err
         });
     }
 };
