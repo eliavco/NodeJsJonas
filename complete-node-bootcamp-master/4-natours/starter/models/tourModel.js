@@ -16,16 +16,18 @@ const tourSchema = new mongoose.Schema({
         required: [true, 'A tour must have a group size']
     },
     difficulty: {
-        type: Number,
+        type: String,
         required: [true, 'A tour must have a difficulty']
     },
     ratingsAverage: {
         type: Number,
-        default: 4.5
+        default: 4.5,
+        min: 0.0,
+        max: 5.0
     },
     ratingsQuantity: {
         type: Number,
-        default: 4.5
+        default: 0
     },
     price: {
         type: Number,
@@ -36,19 +38,11 @@ const tourSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    colors: {
-        primary: {
-            type: String,
-            trim: true,
-            lowercase: true,
-            default: '#28b487'
-        },
-        secondary: {
-            type: String,
-            trim: true,
-            lowercase: true,
-            default: '#7dd56f'
-        }
+    theme: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        default: 'green'
     },
     description: {
         type: String,
