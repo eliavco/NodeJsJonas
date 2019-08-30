@@ -42,7 +42,8 @@ const tourSchema = new mongoose.Schema({
         type: String,
         trim: true,
         lowercase: true,
-        default: 'green'
+        default: 'green',
+        select: false
     },
     description: {
         type: String,
@@ -56,7 +57,8 @@ const tourSchema = new mongoose.Schema({
     images: [String],
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
+        select: false
     },
     startDates: [Date]
 });

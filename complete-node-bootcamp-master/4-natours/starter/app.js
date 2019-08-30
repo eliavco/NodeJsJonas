@@ -2,6 +2,7 @@ const express = require('express');
 
 const app = express();
 const morgan = require('morgan');
+const apiDocRouter = require('./routes/apiDocRoutes');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes Middleware
+app.use(`/api`, apiDocRouter);
 app.use(`/api/v${apiVersion}/tours`, tourRouter);
 app.use(`/api/v${apiVersion}/users`, userRouter);
 
