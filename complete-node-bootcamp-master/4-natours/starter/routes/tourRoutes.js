@@ -11,18 +11,21 @@ router.param('id', (req, res, next, val) => {
 // router.param('id', tourController.checkId);
 
 router
-    .route('/top-5-cheap')
-    .get(tourController.alias, tourController.getAllTours);
-
-router
     .route('/')
     .get(tourController.getAllTours)
     .post(/*tourController.checkBody,*/ tourController.createNewTour);
+
 router
     .route('/:id')
     .get(tourController.getTour)
     .patch(tourController.updateTour)
     .delete(tourController.deleteTour);
+
+router
+    .route('/top-5-cheap')
+    .get(tourController.alias, tourController.getAllTours);
+
+router.route('/stats').get(tourController.getStats);
 
 // router.route('/query/:query').get(tourController.getAllTours);
 
