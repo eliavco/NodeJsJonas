@@ -120,22 +120,7 @@ exports.getDoc = async (req, res) => {
 
 exports.getStats = async (req, res) => {
     try {
-        const stats = await Tour.aggregate([
-            {
-                $match: { ratingsAverage: { $gte: 4.5 } }
-            },
-            {
-                $group: {
-                    _id: null,
-                    num: { $sum: 1 },
-                    numRatings: { $sum: '$ratingsQuantity' },
-                    avgRating: { $avg: '$ratingsAverage' },
-                    avgPrice: { $avg: '$price' },
-                    minPrice: { $min: '$price' },
-                    maxPrice: { $max: '$price' }
-                }
-            }
-        ]);
+        const stats = await Tour.aggregate(req.body.stages);
         res.status(200).json({
             status: 'success',
             data: {
@@ -180,3 +165,27 @@ exports.alias = (req, res, next) => {
 // );
 // queryObj = JSON.parse(queryStr);
 // query = Tour.find(queryObj);
+
+// const aggregation = [
+//     {
+//         $match: { ratingsAverage: { $gte: 4.5 } }
+//     },
+//     {
+//         $group: {
+//             // _id: /*null*/ '$ratingsAverage',
+//             _id: { $toUpper: '$difficulty' },
+//             num: { $sum: 1 },
+//             numRatings: { $sum: '$ratingsQuantity' },
+//             avgRating: { $avg: '$ratingsAverage' },
+//             avgPrice: { $avg: '$price' },
+//             minPrice: { $min: '$price' },
+//             maxPrice: { $max: '$price' }
+//         }
+//     },
+//     {
+//         $sort: { avgPrice: 1 }
+//     },
+//     {
+//         $match: { _id: { $ne: 'EASY' } }
+//     }
+// ];

@@ -16,16 +16,17 @@ router
     .post(/*tourController.checkBody,*/ tourController.createNewTour);
 
 router
-    .route('/:id')
-    .get(tourController.getTour)
-    .patch(tourController.updateTour)
-    .delete(tourController.deleteTour);
-
-router
     .route('/top-5-cheap')
     .get(tourController.alias, tourController.getAllTours);
 
 router.route('/stats').get(tourController.getStats);
+
+// ID HAS TO BE THE LAST
+router
+    .route('/:id')
+    .get(tourController.getTour)
+    .patch(tourController.updateTour)
+    .delete(tourController.deleteTour);
 
 // router.route('/query/:query').get(tourController.getAllTours);
 

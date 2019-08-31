@@ -1,6 +1,7 @@
 What To Do that Jonas missed:
         done - adding or operators to url query api
         done - adding api documentation for every api version
+        done - fix broken alias 
     - filling documentation
     - templating documentation
     - building a welcome screen with a gmail like registration popup
