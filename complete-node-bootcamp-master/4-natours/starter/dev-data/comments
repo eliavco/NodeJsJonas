@@ -1,0 +1,119 @@
+// let queryObj;
+// if (req.body.query) {
+//     queryObj = { ...req.body };
+// } else if (req.query) {
+//     queryObj = { ...req.query };
+// }
+// const excludedFields = ['query', 'page', 'sort', 'limit', 'fields'];
+// excludedFields.forEach(el => delete queryObj[el]);
+
+// const tours = await Tour.find().where('duration').equals(5).where('difficulty').equals('easy');
+
+// if (queryObj.or) {
+//     const or = queryObj.or;
+
+// };
+
+// let queryStr = JSON.stringify(queryObj);
+// queryStr = queryStr.replace(
+//     /\b(gte|gt|lte|lt|or)\b/g,
+//     match => `$${match}`
+// );
+// queryObj = JSON.parse(queryStr);
+// query = Tour.find(queryObj);
+
+// const aggregation = [
+//     {
+//         $match: { ratingsAverage: { $gte: 4.5 } }
+//     },
+//     {
+//         $group: {
+//             // _id: /*null*/ '$ratingsAverage',
+//             _id: { $toUpper: '$difficulty' },
+//             num: { $sum: 1 },
+//             numRatings: { $sum: '$ratingsQuantity' },
+//             avgRating: { $avg: '$ratingsAverage' },
+//             avgPrice: { $avg: '$price' },
+//             minPrice: { $min: '$price' },
+//             maxPrice: { $max: '$price' }
+//         }
+//     },
+//     {
+//         $sort: { avgPrice: 1 }
+//     },
+//     {
+//         $match: { _id: { $ne: 'EASY' } }
+//     }
+// ];
+
+// {
+//     "stages": [
+// 		{
+// 		    "$match": { "ratingsAverage": { "$gte": 4.5 } }
+// 		},
+// 		{
+// 		    "$group": {
+// 		        "_id": { "$toUpper": "$difficulty" },
+// 		        "num": { "$sum": 1 },
+// 		        "numRatings": { "$sum": "$ratingsQuantity" },
+// 		        "avgRating": { "$avg": "$ratingsAverage" },
+// 		        "avgPrice": { "$avg": "$price" },
+// 		        "minPrice": { "$min": "$price" },
+// 		        "maxPrice": { "$max": "$price" }
+// 		    }
+// 		},
+// 		{
+// 		    "$sort": { "avgPrice": 1 }
+// 		},
+// 		{
+// 		    "$match": { "_id": { "$ne": "EASY" } }
+// 		}
+//     ]
+// }
+
+// {
+//     "stages": [
+// 		{
+// 		    "$unwind": "$startDates"
+// 		},
+// 		{
+// 			"$match": {
+// 				"startDates": {
+// 					"$gte": "2021-01-01T00:00:00.000Z",
+// 					"$lt": "2022-01-01T00:00:00.000Z"
+// 				}
+// 			}
+// 		},
+// 		{
+// 			"$group": {
+// 				"_id": {
+// 					"$month": "$startDates"
+// 				},
+// 				"numTourStarts": {
+// 					"$sum": 1
+// 				},
+// 				"tours": {
+// 					"$push": "$name"
+// 				}
+// 			}
+// 		},
+// 		{
+// 			"$addFields": {
+// 				"month": "$_id"
+// 			}
+// 		},
+// 		{
+// 			"$project": {
+// 				"_id": 0
+// 			}
+// 		},
+// 		{
+// 			"$sort": {
+// 				"numTourStarts": -1
+// 			}
+// 		},
+// 		{
+// 			"$limit": 6
+// 		}
+//     ]
+// }
