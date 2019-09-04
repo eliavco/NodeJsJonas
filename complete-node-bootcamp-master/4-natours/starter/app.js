@@ -6,7 +6,7 @@ const apiDocRouter = require('./routes/apiDocRoutes');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const globalErrorHandler = require('./controllers/errorController');
-const appError = require('./utils/appError');
+const AppError = require('./utils/appError');
 
 const apiVersion = 1;
 app.use(express.json());
@@ -32,12 +32,7 @@ app.use(`/api/v${apiVersion}/tours`, tourRouter);
 app.use(`/api/v${apiVersion}/users`, userRouter);
 
 app.all(`/api/*`, (req, res, next) => {
-    next(
-        new appError.AppError(
-            `The URL path ${req.originalUrl} was not found`,
-            404
-        )
-    );
+    next(new AppError(`The URL path ${req.originalUrl} was not found`, 404));
 });
 
 //
