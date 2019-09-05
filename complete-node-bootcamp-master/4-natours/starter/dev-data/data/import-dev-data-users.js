@@ -1,7 +1,7 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Tour = require('./../../models/tourModel');
+const User = require('./../../models/userModel');
 
 dotenv.config({ path: './config.env' });
 // console.log(process.env);
@@ -25,13 +25,21 @@ mongoose
         // console.log('DB connected');
     });
 
-const tours = JSON.parse(
-    fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
+const userNames = JSON.parse(
+    fs.readFileSync(`${__dirname}/users-simple.json`, 'utf-8')
 );
+const users = userNames.map(userName => {
+    return {
+        name: userName,
+        email: `${userName.split(' ').join('.')}@highmail.com`,
+        password: `${userName.split(' ')[0]}100`,
+        passwordConfirm: `${userName.split(' ')[0]}100`
+    };
+});
 
 const importData = async () => {
     try {
-        await Tour.create(tours);
+        await User.create(users);
         // console.log('Data successfully loaded');
     } catch (error) {
         // console.log(error);
@@ -40,7 +48,7 @@ const importData = async () => {
 };
 const deleteData = async () => {
     try {
-        await Tour.deleteMany();
+        await User.deleteMany();
         // console.log('Data successfully deleted');
     } catch (error) {
         // console.log(error);

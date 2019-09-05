@@ -18,6 +18,12 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
         results: {
             tours: tours.length
         },
+        user: {
+            id: req.currentUser._id,
+            name: req.currentUser.name,
+            email: req.currentUser.email,
+            role: req.currentUser.role
+        },
         data: {
             tours
         }

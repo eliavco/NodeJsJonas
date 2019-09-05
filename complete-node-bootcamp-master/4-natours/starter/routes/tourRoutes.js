@@ -10,24 +10,34 @@ router.param('id', (req, res, next, val) => {
 });
 
 // router.param('id', tourController.checkId);
+const { protect, restrict } = authController;
+// If login is required, add protect as first middleware
 
 router
     .route('/')
-    .get(authController.protect, tourController.getAllTours)
-    .post(/*tourController.checkBody,*/ tourController.createNewTour);
+    .get(protect, tourController.getAllTours)
+    .post(
+        /*tourController.checkBody,*/ protect,
+        restrict('admin', 'lead-guide'),
+        tourController.createNewTour
+    );
 
 router
     .route('/top-5-cheap')
-    .get(tourController.alias, tourController.getAllTours);
+    .get(protect, tourController.alias, tourController.getAllTours);
 
-router.route('/stats').get(tourController.getStats);
+router.route('/stats').get(protect, tourController.getStats);
 
 // ID HAS TO BE THE LAST
 router
     .route('/:id')
-    .get(tourController.getTour)
-    .patch(tourController.updateTour)
-    .delete(tourController.deleteTour);
+    .get(protect, tourController.getTour)
+    .patch(protect, restrict('admin', 'lead-guide'), tourController.updateTour)
+    .delete(
+        protect,
+        restrict('admin', 'lead-guide'),
+        tourController.deleteTour
+    );
 
 // router.route('/query/:query').get(tourController.getAllTours);
 

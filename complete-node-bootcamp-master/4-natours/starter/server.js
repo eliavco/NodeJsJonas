@@ -13,11 +13,15 @@ process.on('uncaughtException', err => {
 dotenv.config({ path: './config.env' });
 // console.log(process.env.NODE_ENV);
 
-// Connecting to the project's Database on MongoDB Atlas
-const DB = process.env.DATABASE.replace(
+// Change Between local and remote connections:
+//  change DB value to O in config.env
+//  open a server by typing 'mongod' in a powershell
+const DBOnline = process.env.DATABASE.replace(
     '<PASSWORD>',
     process.env.DATABASE_PASSWORD
 );
+const DBLocal = process.env.DATABASE_LOCAL;
+const DB = process.env.DB === 'L' ? DBLocal : DBOnline;
 mongoose
     .connect(DB, {
         useNewUrlParser: true,
